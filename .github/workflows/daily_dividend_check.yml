@@ -1,28 +1,41 @@
 name: Daily Dividend Check
 
+# Schedule the workflow to run daily at 7:00 AM UTC
 on:
   schedule:
-    - cron: '0 7 * * *'  # Runs daily at 7:00 AM UTC
+    - cron: '0 7 * * *'  # Adjust the cron time as per your requirement
+
+  # Allow manual triggering
+  workflow_dispatch:
 
 jobs:
   run-dividend-check:
     runs-on: ubuntu-latest
+
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # Step 2: Set up Python environment
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: '3.x'  # Specify your desired Python version
 
+      # Step 3: Install required dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4 pandas
 
+      # Step 4: Run the Python script
       - name: Run dividend check
         env:
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-        run: python dividend_check.py
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}  # Your email address stored as a secret
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}  # Your email password stored as a secret
+        run: python dividend_check.py  # Adjust the path if the script is in a subdirectory
+
+      # Step 5: Optional - Debugging step to list files
+      - name: List repository files (debugging)
+        run: ls -R
