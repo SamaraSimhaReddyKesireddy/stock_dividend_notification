@@ -6,7 +6,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-# Define a function to fetch upcoming dividend dates
+# Define a function to fetch upcoming  dividend dates
 def fetch_upcoming_dividends(stock_list):
     url = 'https://www.moneycontrol.com/stocks/marketinfo/dividends_declared/index.php'
     headers = {
